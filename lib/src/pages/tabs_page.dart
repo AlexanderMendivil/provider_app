@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_app/src/pages/tab1_page.dart';
+import 'package:provider_app/src/pages/tab2_page.dart';
 
 class TabsScreen extends StatelessWidget {
    
@@ -52,14 +53,10 @@ class _Pages extends StatelessWidget {
     return PageView(
       controller: navigationModel.pageController,
       physics: const NeverScrollableScrollPhysics(),
-      children: [
-        const Tab1Screen(),
-        Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.blue,
-        ), 
+      children: const [
+        Tab1Screen(),
+        Tab2Screen(),
+      
       ],
     );
   }
