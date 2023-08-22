@@ -18,10 +18,24 @@ class NewsService with ChangeNotifier{
     Category(FontAwesomeIcons.memory, 'technology'),
   ];
 
+  String _selectedCategory = 'business';
+
+  Map<String, List<Article>> categoryArticles = {};
+   
+
   NewsService(){
     getTopHeadlines();
+    categories.forEach((element) { 
+      categoryArticles[element.name] = [];
+    });
   }
 
+  String get selectedCategory => _selectedCategory;
+  set selectedCategory(String value){
+    _selectedCategory = value;
+    getArticlesByCategory(value); 
+    notifyListeners();
+  }
   getTopHeadlines() async {
     final url  = '${dotenv.get('API_URL')}top-headlines?country=us&apiKey=${dotenv.get('API_KEY')}';
     final res = await http.get(Uri.parse(url));
@@ -29,6 +43,18 @@ class NewsService with ChangeNotifier{
     final NewsModel newsResponse = newsModelFromJson(res.body);
 
     headlines.addAll(newsResponse.articles);
+    notifyListeners();
+  }
+  
+  Future<List<Article>?> getArticlesByCategory(String category) async {
+    if(categoryArticles[category]!.isNotEmpty){
+      return categoryArticles[category];
+    }
+    final url  = '${dotenv.get('API_URL')}top-headlines?country=us&apiKey=${dotenv.get('API_KEY')}&category=$category';
+    final res = await http.get(Uri.parse(url));
+    final NewsModel newsResponse = newsModelFromJson(res.body);
+
+    categoryArticles[category]!.addAll(newsResponse.articles);
     notifyListeners();
   }
 }

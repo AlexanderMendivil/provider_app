@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_app/src/pages/tab1_page.dart';
 import 'package:provider_app/src/pages/tab2_page.dart';
+import 'package:provider_app/src/theme/theme.dart';
 
 class TabsScreen extends StatelessWidget {
    
@@ -30,13 +31,19 @@ class _Navigation extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: navigationModel.currentPage,
       onTap: (value) => navigationModel.currentPage = value,
-      items: const [
+      items: [
       BottomNavigationBarItem(
-        icon: Icon(Icons.person_outline),
+        icon: Icon(
+          Icons.person_outline, 
+          color: myTheme.primaryColor,
+          ),
         label: 'Para ti',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.public),
+        icon: Icon(
+          Icons.public,
+          color: myTheme.primaryColor,
+          ),
         label: 'Encabezados',
       ),
     ]);
