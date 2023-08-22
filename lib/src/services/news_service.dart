@@ -45,10 +45,12 @@ class NewsService with ChangeNotifier{
     headlines.addAll(newsResponse.articles);
     notifyListeners();
   }
+
+  List<Article> get getArticlesBySelectedCategory => categoryArticles[selectedCategory]!;
   
-  Future<List<Article>?> getArticlesByCategory(String category) async {
-    if(categoryArticles[category]!.isNotEmpty){
-      return categoryArticles[category];
+  void getArticlesByCategory(String category) async {
+    if(categoryArticles[category] !.isNotEmpty){
+      return;
     }
     final url  = '${dotenv.get('API_URL')}top-headlines?country=us&apiKey=${dotenv.get('API_KEY')}&category=$category';
     final res = await http.get(Uri.parse(url));
